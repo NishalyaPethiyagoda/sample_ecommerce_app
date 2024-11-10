@@ -7,10 +7,10 @@ const String baseUrl = "https://fakestoreapi.com";
 class HttpMethods {
   HttpMethods();
 
-  Future<dynamic> commonApiGet({String endPointUrl = "products/1", String additionalParam = ''}) async{
+  Future<dynamic> commonApiGet(String endPointUrl , { String additionalPathParam = ''}) async{
 
     try{
-      final response = await http.get(Uri.parse('$baseUrl/$endPointUrl$additionalParam') );
+      final response = await http.get(Uri.parse('$baseUrl/$endPointUrl/$additionalPathParam') );
       return _handleResponse(response);
     }
     catch(e){
