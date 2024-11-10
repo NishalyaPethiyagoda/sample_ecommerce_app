@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_ecommerce_app/providers/cart_provider.dart';
-import 'package:sample_ecommerce_app/widgets/product_dashboard_card.dart';
+import 'package:sample_ecommerce_app/screens/checkout/view/checkout_screen.dart';
+import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
+import 'package:sample_ecommerce_app/widgets/product_cart_card.dart';
 
 class CartScreen extends StatelessWidget {
   @override
@@ -39,19 +41,36 @@ class CartScreen extends StatelessWidget {
           ),
           child: Padding(  
             padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemCount: cartItems.length,
-              itemBuilder: (context, index) {
-                return Row(
-                  children: [
-                    Expanded(
-                      child: ProductDashboardCard(
-                        product: cartItems[index],
-                      ),
+            child: Stack(
+              children: [ 
+                ListView.builder(
+                  itemCount: cartItems.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: ProductCardCard(
+                            product: cartItems[index],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                Positioned(
+                  bottom: 2,
+                  left: 25,
+                  right: 25,
+                    child: AnimatedGradientButton(
+                      buttonText: "Checkout",
+                      onPressed: (){
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const CheckoutScreen()
+                        ));
+                      },
                     ),
-                  ],
-                );
-              },
+                ),
+              ]
             ),
           ),
         ),
