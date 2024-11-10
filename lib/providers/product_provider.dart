@@ -12,6 +12,11 @@ class ProductProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  void addProduct(ProductModel product){
+    allProductsList.add(product);
+    notifyListeners();
+  }
+
   void removeProduct(ProductModel product){
     allProductsList.remove(product);
     notifyListeners();
