@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sample_ecommerce_app/models/product_model.dart';
 import 'package:sample_ecommerce_app/network/http_methods.dart';
 import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key});
+  final ProductModel product;
+
+  const ProductDetailScreen({super.key, required this.product});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -23,8 +26,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         backgroundColor: Color(0xFFF8C1A5),
         centerTitle: true,
         title: Text(
-          "Product Details", 
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          widget.product.name, 
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white.withOpacity(0.85)),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
           ),
         // actions: [
         //   IconButton(
@@ -62,7 +67,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 height: screenHeight * 0.5,
                 child: Column(
                   children: [
-                    Text("data"),
                     Expanded(
                       child: Text("hi")
                     ),
