@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sample_ecommerce_app/models/product_model.dart';
+import 'package:sample_ecommerce_app/providers/cart_provider.dart';
+import 'package:sample_ecommerce_app/providers/product_provider.dart';
 import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final ProductModel product;
-
   const ProductDetailScreen({super.key, required this.product});
 
   @override
@@ -172,10 +174,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               top: 5 + screenHeight * 0.5 +  screenHeight * 0.2 + 35,
               left: 25,
               right: 25,
-              child: AnimatedGradientButton(
-                buttonText: "Add to Cart",
-                product: widget.product,
-              )
+                child: AnimatedGradientButton(
+                  buttonText: "Add to Cart",
+                  onPressed: (){
+                    Provider.of<CartProvider>(context, listen: false).addItemToCart(widget.product);
+                    Provider.of<ProductProvider>(context, listen: false).removeProduct(widget.product);
+                    Future.microtask(() => Navigator.pop(context));
+                  },
+                ),
             ),
           ],
         ),

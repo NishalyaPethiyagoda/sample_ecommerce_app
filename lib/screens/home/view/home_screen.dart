@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:sample_ecommerce_app/models/product_model.dart';
+import 'package:sample_ecommerce_app/providers/product_provider.dart';
 import 'package:sample_ecommerce_app/screens/home/bloc/home_bloc.dart';
 import 'package:sample_ecommerce_app/screens/home/bloc/home_event.dart';
 import 'package:sample_ecommerce_app/screens/home/bloc/home_state.dart';
@@ -20,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final productsList = Provider.of<ProductProvider>(context).allProductsList;
+
     return BlocProvider<HomeBloc>(
       create: (BuildContext context) =>
           HomeBloc(HomeRepository())..add(HomeGetProductsEvent()),
@@ -29,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             isLoading = true;
           } else if (state is HomeProductsLoadedState) {
             products = state.products;
+            Provider.of<ProductProvider>(context, listen: false).setProductItems(products);
             isLoading = false;
           }
         },
@@ -67,18 +72,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: isLoading
                         ? const Center(child: CircularProgressIndicator())
                         : ListView.builder(
-                            itemCount: (products.length / 2).ceil(),
+                            itemCount: (productsList.length / 2).ceil(),
                             itemBuilder: (context, index) {
                               int firstIndex = index * 2;
                               int secondIndex = firstIndex + 1;
                   
-                              ProductModel leftProduct = products[firstIndex];
-                              ProductModel? rightProduct = secondIndex < products.length ? products[secondIndex] : null;
+                              ProductModel leftProduct = productsList[firstIndex];
+                              ProductModel? rightProduct = secondIndex < productsList.length ? productsList[secondIndex] : null;
                               return Row(
                                 children: [
                                   Expanded(
                                     child: ProductDashboardCard(
                                       product: leftProduct,
+                                      
                                     ),
                                   ),
                                   rightProduct != null ? Expanded(
