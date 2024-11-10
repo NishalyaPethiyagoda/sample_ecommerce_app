@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sample_ecommerce_app/models/product_model.dart';
-import 'package:sample_ecommerce_app/network/http_methods.dart';
 import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -13,8 +12,7 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  final HttpMethods _httpMethods = HttpMethods();
-  bool isExpanded = false; 
+  bool isNotExpanded = true; 
 
   @override
   Widget build(BuildContext context) {
@@ -148,16 +146,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           child: GestureDetector(
                             onTap: (){
                               setState((){
-                                isExpanded = !isExpanded;
+                                isNotExpanded = !isNotExpanded;
                               });
                             },
                             child: Text(
                               widget.product.description, 
-                              overflow: isExpanded ? TextOverflow.ellipsis : null, 
-                              maxLines: isExpanded ? 4 : null,
+                              overflow: isNotExpanded ? TextOverflow.ellipsis : null, 
+                              maxLines: isNotExpanded ? 4 : null,
                             )
                             )),
-                            isExpanded ? const Positioned(
+                            isNotExpanded ? const Positioned(
                                   right: 0, 
                                   bottom: 3,
                                   child: Text("Tap Description >", style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500))
