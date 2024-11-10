@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sample_ecommerce_app/screens/home/view/home_screen.dart';
-import 'package:sample_ecommerce_app/screens/product_detail/view/product_detail_screen.dart';
+import 'package:sample_ecommerce_app/navigation/main_navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       //   useMaterial3: true,
       // ),
-      home: HomeScreen(),
+      home: MainNavigation(),
       // home: ProductDetailScreen(),
     );
   }
