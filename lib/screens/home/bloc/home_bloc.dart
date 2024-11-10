@@ -1,8 +1,8 @@
 
-
-
 import 'package:bloc/bloc.dart';
+
 import 'package:sample_ecommerce_app/models/product_model.dart';
+
 import 'package:sample_ecommerce_app/screens/home/bloc/home_event.dart';
 import 'package:sample_ecommerce_app/screens/home/bloc/home_state.dart';
 import 'package:sample_ecommerce_app/screens/home/home_repository.dart';
@@ -17,7 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState>{
 
       try{
         
-        ProductModel products = await homeRepository.getPoducts();
+        List<ProductModel> products = await homeRepository.getPoducts();
 
         emit(HomeProductsLoadedState(products ));
 
