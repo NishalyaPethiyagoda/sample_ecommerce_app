@@ -17,7 +17,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
 
     double screenHeight = MediaQuery.of(context).size.height;
-    final response = _httpMethods.commonApiGet();
 
     return Scaffold(
       appBar: AppBar(
