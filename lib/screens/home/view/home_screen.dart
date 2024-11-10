@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 251, 169, 128),
+            backgroundColor:  Color.fromARGB(255, 251, 169, 128),
             centerTitle: false,
             title: Text(
               "Products",

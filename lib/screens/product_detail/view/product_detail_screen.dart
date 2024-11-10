@@ -171,7 +171,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             Positioned(
-              top: 5 + screenHeight * 0.5 +  screenHeight * 0.2 + 35,
+              bottom: 2,
               left: 25,
               right: 25,
                 child: AnimatedGradientButton(
