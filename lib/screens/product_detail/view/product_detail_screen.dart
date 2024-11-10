@@ -172,7 +172,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               top: 5 + screenHeight * 0.5 +  screenHeight * 0.2 + 35,
               left: 25,
               right: 25,
-              child: const AnimatedGradientButton(buttonText: "Add to Cart",)
+              child: AnimatedGradientButton(
+                buttonText: "Add to Cart",
+                product: widget.product,
+              )
             ),
           ],
         ),

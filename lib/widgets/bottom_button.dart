@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sample_ecommerce_app/models/product_model.dart';
+import 'package:sample_ecommerce_app/providers/cart_provider.dart';
 
 class AnimatedGradientButton extends StatefulWidget {
   final String buttonText;
-  const AnimatedGradientButton({super.key, required this.buttonText});
+  final ProductModel product;
+  const AnimatedGradientButton({super.key, required this.buttonText, required this.product});
 
   @override
   _AnimatedGradientButtonState createState() => _AnimatedGradientButtonState();
@@ -56,10 +60,15 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton> with Si
             borderRadius: BorderRadius.circular(25),
           ),
           child: TextButton(
-            onPressed: () {},
+            onPressed: (){
+              Provider.of<CartProvider>(context, listen: false).addItemToCart(widget.product);
+              if (mounted) {
+                Future.microtask(() => Navigator.pop(context));
+              }
+            },
             child: Text(
               widget.buttonText,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         );
