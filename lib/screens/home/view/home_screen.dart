@@ -68,18 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Expanded(
                                   child: ProductDashboardCard(
-                                    productName: leftProduct.name,
-                                    productImage: leftProduct.imageUrl,
-                                    productPrice: leftProduct.price,
-                                    rating: leftProduct.rating.rating,
+                                    product: leftProduct,
                                   ),
                                 ),
                                 rightProduct != null ? Expanded(
                                   child: ProductDashboardCard(
-                                    productName: rightProduct.name,
-                                    productImage: rightProduct.imageUrl,
-                                    productPrice: rightProduct.price,
-                                    rating: leftProduct.rating.rating,
+                                    product: rightProduct,
                                   ),
                                 ) : Container(),
                               ],
