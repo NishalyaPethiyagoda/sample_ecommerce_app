@@ -33,9 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         child: Scaffold(
-          backgroundColor: Color(0xFFF8C1A5),
           appBar: AppBar(
-            backgroundColor: Color(0xFFF8C1A5),
+            backgroundColor: Color.fromARGB(255, 251, 169, 128),
             centerTitle: false,
             title: Text(
               "Products",
@@ -52,34 +51,46 @@ class _HomeScreenState extends State<HomeScreen> {
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               return SafeArea(
-                child: Padding(  
-                  padding: const EdgeInsets.all(8.0),
-                  child: isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : ListView.builder(
-                          itemCount: (products.length / 2).ceil(),
-                          itemBuilder: (context, index) {
-                            int firstIndex = index * 2;
-                            int secondIndex = firstIndex + 1;
-
-                            ProductModel leftProduct = products[firstIndex];
-                            ProductModel? rightProduct = secondIndex < products.length ? products[secondIndex] : null;
-                            return Row(
-                              children: [
-                                Expanded(
-                                  child: ProductDashboardCard(
-                                    product: leftProduct,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 251, 169, 128),
+                        Color.fromARGB(255, 251, 222, 208), 
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                  child: Padding(  
+                    padding: const EdgeInsets.all(8.0),
+                    child: isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            itemCount: (products.length / 2).ceil(),
+                            itemBuilder: (context, index) {
+                              int firstIndex = index * 2;
+                              int secondIndex = firstIndex + 1;
+                  
+                              ProductModel leftProduct = products[firstIndex];
+                              ProductModel? rightProduct = secondIndex < products.length ? products[secondIndex] : null;
+                              return Row(
+                                children: [
+                                  Expanded(
+                                    child: ProductDashboardCard(
+                                      product: leftProduct,
+                                    ),
                                   ),
-                                ),
-                                rightProduct != null ? Expanded(
-                                  child: ProductDashboardCard(
-                                    product: rightProduct,
-                                  ),
-                                ) : Container(),
-                              ],
-                            );
-                          },
-                        ),
+                                  rightProduct != null ? Expanded(
+                                    child: ProductDashboardCard(
+                                      product: rightProduct,
+                                    ),
+                                  ) : Container(),
+                                ],
+                              );
+                            },
+                          ),
+                  ),
                 ),
               );
             },

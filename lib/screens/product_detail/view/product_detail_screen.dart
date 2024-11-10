@@ -14,7 +14,7 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final HttpMethods _httpMethods = HttpMethods();
-
+  bool isExpanded = false; 
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +23,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFF8C1A5),
+        backgroundColor: Color.fromARGB(255, 251, 169, 128),
         centerTitle: true,
+        iconTheme: const IconThemeData(
+          color: Colors.white, // Set the back button color to white
+        ),
         title: Text(
           widget.product.name, 
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white.withOpacity(0.85)),
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
           ),
-        // actions: [
-        //   IconButton(
-        //   onPressed: (){
-        //     // expandSearch = true;
-        //   }, 
-        //   icon: Icon(Icons.search)
-        // ),]
       ),
       body: SafeArea(
         child: Stack(
@@ -45,8 +41,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Column(
               children: [
                 Container(
-                  height: screenHeight * 0.45,
-                  color: const Color(0xFFF8C1A5),
+                  height: screenHeight * 0.48,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 251, 169, 128),
+                        Color(0xFFF8C1A5), 
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: Container(
@@ -64,14 +69,54 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   color: Colors.white, 
                   borderRadius: BorderRadius.circular(16.0), 
                 ),
-                height: screenHeight * 0.5,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Text("hi")
-                    ),
-                    Text("Price - \$ 15.00"),
-                  ],
+                height: screenHeight * 0.51,
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Stack(
+                    children: [
+                      Center(child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 20.0),
+                        child: Image.network(widget.product.imageUrl),
+                      )),
+                      Positioned(
+                        left: 5,
+                        bottom: 5,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xFFFFA726),
+                                Colors.grey, 
+                              ],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 2.0),
+                            child: Text("\$ ${widget.product.price.toString()}", style: TextStyle(color: Colors.white.withOpacity(0.85),fontSize: 16, fontWeight: FontWeight.w600)),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 5,
+                        bottom: 5,
+                        child: widget.product.rating.rating != null 
+                          ? Row(
+                              children: List.generate(
+                                5,
+                                (star) => Icon(
+                                  Icons.star,
+                                  color: star < widget.product.rating.rating!.toInt() ? Colors.orange : Colors.grey,
+                                  size: 16,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -88,11 +133,39 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Description", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
-                    Expanded(
-                      child: Text("hi \n sdsf\nsdfsf \n sds", overflow: TextOverflow.ellipsis, maxLines: 4,)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text("Description", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                        Text("Count - ${widget.product.rating.count}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                      ],
                     ),
-                    Text("Price - \$ 15.00"),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          SingleChildScrollView(
+                          child: GestureDetector(
+                            onTap: (){
+                              setState((){
+                                isExpanded = !isExpanded;
+                              });
+                            },
+                            child: Text(
+                              widget.product.description, 
+                              overflow: isExpanded ? TextOverflow.ellipsis : null, 
+                              maxLines: isExpanded ? 4 : null,
+                            )
+                            )),
+                            isExpanded ? const Positioned(
+                                  right: 0, 
+                                  bottom: 3,
+                                  child: Text("Tap Description >", style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500))
+                                )
+                                : Container()
+                        ] 
+                      )
+                    ),
                   ],
                 ),
               ),
@@ -101,7 +174,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               top: 5 + screenHeight * 0.5 +  screenHeight * 0.2 + 35,
               left: 25,
               right: 25,
-              child: AnimatedGradientButton(buttonText: "Add to Cart",)
+              child: const AnimatedGradientButton(buttonText: "Add to Cart",)
             ),
           ],
         ),

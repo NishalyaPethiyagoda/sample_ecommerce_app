@@ -21,18 +21,19 @@ class ProductDashboardCard extends StatelessWidget {
       },
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.fromLTRB(4, 8.0, 4, 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.network(product.imageUrl, width: 50, height: 50),
+              Image.network(product.imageUrl, width: 60, height: 70),
+              const SizedBox(width: 5,),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(product.name, overflow: TextOverflow.ellipsis,),
-                    Text(product.price.toString()),
+                    Text(product.name, overflow: TextOverflow.ellipsis, maxLines: 2,),
+                    Text('\$ ${product.price.toString()}'),
                     product.rating.rating != null ? Row(
                     children: List.generate(
                       5,
