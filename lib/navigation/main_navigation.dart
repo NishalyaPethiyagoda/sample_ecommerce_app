@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sample_ecommerce_app/providers/cart_provider.dart';
 import 'package:sample_ecommerce_app/screens/cart/view/cart_screen.dart';
 import 'package:sample_ecommerce_app/screens/home/view/home_screen.dart';
 
@@ -18,10 +16,6 @@ class _MainNavigationState extends State<MainNavigation> {
   ];
 
   void _onItemTapped(int index) {
-    if(index == 1 && Provider.of<CartProvider>(context, listen: false).cartItemsList.isEmpty){
-        return;
-      }
-
     setState(() {
       _selectedIndex = index;
     });

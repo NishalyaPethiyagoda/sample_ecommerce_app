@@ -43,7 +43,7 @@ class CartScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Stack(
               children: [ 
-                ListView.builder(
+                cartItems.isNotEmpty ? ListView.builder(
                   itemCount: cartItems.length,
                   itemBuilder: (context, index) {
                     return Row(
@@ -56,7 +56,7 @@ class CartScreen extends StatelessWidget {
                       ],
                     );
                   },
-                ),
+                ): Center(child: Text("No Items Added to Cart", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white.withOpacity(0.85)),),),
                 Positioned(
                   bottom: 2,
                   left: 25,
@@ -68,6 +68,7 @@ class CartScreen extends StatelessWidget {
                           builder: (context) => const CheckoutScreen()
                         ));
                       },
+                      isButtonDisabled: cartItems.isEmpty ? true : false
                     ),
                 ),
               ]
