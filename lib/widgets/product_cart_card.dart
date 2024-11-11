@@ -16,6 +16,7 @@ class ProductCardCard extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ProductDetailScreen(
             product: product,
+            isProductAddedToCart: Provider.of<CartProvider>(context).cartItems.contains(product)
           )
         ));
       

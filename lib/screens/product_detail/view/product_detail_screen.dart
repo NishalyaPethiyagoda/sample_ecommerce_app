@@ -7,7 +7,8 @@ import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final ProductModel product;
-  const ProductDetailScreen({super.key, required this.product});
+  final bool isProductAddedToCart;
+  const ProductDetailScreen({super.key, required this.product, required this.isProductAddedToCart});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -142,47 +143,56 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ],
                     ),
                     Expanded(
-                      child: Stack(
-                        children: [
-                          SingleChildScrollView(
-                          child: GestureDetector(
-                            onTap: (){
-                              setState((){
-                                isNotExpanded = !isNotExpanded;
-                              });
-                            },
+                      child: widget.isProductAddedToCart 
+                        ? SingleChildScrollView(
                             child: Text(
                               widget.product.description, 
-                              overflow: isNotExpanded ? TextOverflow.ellipsis : null, 
-                              maxLines: isNotExpanded ? 4 : null,
-                            )
-                            )),
-                            isNotExpanded ? const Positioned(
-                                  right: 0, 
-                                  bottom: 3,
-                                  child: Text("Tap Description >", style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500))
-                                )
-                                : Container()
-                        ] 
-                      )
+                              overflow: null, 
+                              maxLines: null,
+                          ))
+                        : Stack(
+                          children: [
+                            SingleChildScrollView(
+                            child: GestureDetector(
+                              onTap: (){
+                                setState((){
+                                  isNotExpanded = !isNotExpanded;
+                                });
+                              },
+                              child: Text(
+                                widget.product.description, 
+                                overflow: isNotExpanded ? TextOverflow.ellipsis : null, 
+                                maxLines: isNotExpanded ? 4 : null,
+                              )
+                              )),
+                              isNotExpanded ? const Positioned(
+                                    right: 0, 
+                                    bottom: 3,
+                                    child: Text("Tap Description >", style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500))
+                                  )
+                                  : Container()
+                          ] 
+                        )
                     ),
                   ],
                 ),
               ),
             ),
-            Positioned(
-              bottom: 2,
-              left: 25,
-              right: 25,
-                child: AnimatedGradientButton(
-                  buttonText: "Add to Cart",
-                  onPressed: (){
-                    Provider.of<CartProvider>(context, listen: false).addItemToCart(widget.product);
-                    Provider.of<ProductProvider>(context, listen: false).removeProduct(widget.product);
-                    Future.microtask(() => Navigator.pop(context));
-                  },
+            widget.isProductAddedToCart 
+              ? Container() 
+              : Positioned(
+                bottom: 2,
+                left: 25,
+                right: 25,
+                  child: AnimatedGradientButton(
+                    buttonText: "Add to Cart",
+                    onPressed: (){
+                      Provider.of<CartProvider>(context, listen: false).addItemToCart(widget.product);
+                      Provider.of<ProductProvider>(context, listen: false).removeProduct(widget.product);
+                      Future.microtask(() => Navigator.pop(context));
+                    },
+                  ),
                 ),
-            ),
           ],
         ),
       ),

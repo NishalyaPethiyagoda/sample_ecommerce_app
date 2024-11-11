@@ -1,7 +1,7 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sample_ecommerce_app/models/product_model.dart';
+import 'package:sample_ecommerce_app/providers/cart_provider.dart';
 import 'package:sample_ecommerce_app/screens/product_detail/view/product_detail_screen.dart';
 
 class ProductDashboardCard extends StatelessWidget {
@@ -15,6 +15,7 @@ class ProductDashboardCard extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ProductDetailScreen(
             product: product,
+            isProductAddedToCart: Provider.of<CartProvider>(context).cartItems.contains(product)
           )
         ));
       
