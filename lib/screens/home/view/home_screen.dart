@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Padding(  
                     padding: const EdgeInsets.all(8.0),
                     child: isLoading
-                        ? const Center(child: CircularProgressIndicator())
+                        ? const Center(child: CircularProgressIndicator(color: Colors.grey,))
                         : ListView.builder(
                             itemCount: (productsList.length / 2).ceil(),
                             itemBuilder: (context, index) {
