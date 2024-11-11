@@ -4,7 +4,8 @@ import 'package:sample_ecommerce_app/models/product_model.dart';
 import 'package:sample_ecommerce_app/models/user_model.dart';
 import 'package:sample_ecommerce_app/providers/cart_provider.dart';
 import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
-import 'package:sample_ecommerce_app/widgets/product_dashboard_card.dart';
+import 'package:sample_ecommerce_app/widgets/product_cart_card.dart';
+
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -60,133 +61,139 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               end: Alignment.bottomCenter,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Stack(
-              children: [ 
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Form(
-                        key: _key,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                hintText: 'Enter your name',
-                                border: InputBorder.none,
-                                filled: true,
-                                fillColor: Colors.white.withOpacity(0.85),
-                              ),
-                              keyboardType: TextInputType.name,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your name';
-                                }
-                                return null;
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  user.name = value;
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 16),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                hintText: 'Enter your address',
-                                border: InputBorder.none,
-                                filled: true,
-                                fillColor: Colors.white.withOpacity(0.85),
-                              ),
-                              keyboardType: TextInputType.streetAddress,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your address';
-                                }
-                                return null;
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  user.shippingAddress = value;
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 16),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                hintText: 'Enter your phone number',
-                                border: InputBorder.none,
-                                filled: true,
-                                fillColor: Colors.white.withOpacity(0.85),
-                              ),
-                              keyboardType: TextInputType.phone,
-                              validator: (value) {
-                                if (value == null || value.isEmpty || value.length != 10) {
-                                  return 'Please enter a valid phone number';
-                                }
-                                return null;
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  user.phoneNumber = value;
-                                });
-                              },
-                            ),
-                            const SizedBox(height: 24),
-                          ],
-                        ),
-                      ),
-                      Column(
+          child: Column(
+            children: [
+              Expanded(
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
                         children: [
-                          const Text(
-                            'Cart Summary',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          Form(
+                            key: _key,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter your name',
+                                    border: InputBorder.none,
+                                    filled: true,
+                                    fillColor: Colors.white.withOpacity(0.85),
+                                  ),
+                                  keyboardType: TextInputType.name,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your name';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    setState(() {
+                                      user.name = value;
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter your address',
+                                    border: InputBorder.none,
+                                    filled: true,
+                                    fillColor: Colors.white.withOpacity(0.85),
+                                  ),
+                                  keyboardType: TextInputType.streetAddress,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your address';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    setState(() {
+                                      user.shippingAddress = value;
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter your phone number',
+                                    border: InputBorder.none,
+                                    filled: true,
+                                    fillColor: Colors.white.withOpacity(0.85),
+                                  ),
+                                  keyboardType: TextInputType.phone,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty || value.length != 10) {
+                                      return 'Please enter a valid phone number';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    setState(() {
+                                      user.phoneNumber = value;
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 24),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Cart Summary',
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'Total: \$${getTotalPrice(cartItems).toStringAsFixed(2)}',
+                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 8),
-                          // Expanded(
-                          //   child: ListView.builder(
-                          //     itemCount: cartItems.length,
-                          //     itemBuilder: (context, index) {
-                          //       var item = cartItems[index];
-                          //       return ListTile(
-                          //         title: Text(item.name),
-                          //         // subtitle: Text('Quantity: ${item.quantity}'),
-                          //         // trailing: Text('\$${item.price * item.quantity}'),
-                          //       );
-                          //     },
-                          //   ),
-                          // ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Total: \$${getTotalPrice(cartItems).toStringAsFixed(2)}',
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          SizedBox(
+                            height: 200, 
+                            child: ListView.builder(
+                              itemCount: cartItems.length,
+                              itemBuilder: (context, index) {
+                                var item = cartItems[index];
+                                return ProductCardCard(
+                                  product: item,
+                                );
+                              },
+                            ),
                           ),
                           const SizedBox(height: 16),
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
-                ),
-                Positioned(
-                  bottom: 2,
-                  left: 25,
-                  right: 25,
+                  Positioned(
+                    bottom: 8,
+                    left: 25,
+                    right: 25,
                     child: AnimatedGradientButton(
                       buttonText: "Place Order",
-                      onPressed: (){
+                      onPressed: () {
                         if (_key.currentState?.validate() ?? false) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Processing order...')),
                           );
-                      }} 
-                    )
-                ),
-              ]
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
-    );
+    ),
+  );
   }
 }
