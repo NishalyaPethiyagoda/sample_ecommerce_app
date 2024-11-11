@@ -45,7 +45,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton> with Si
         return Container(
           decoration: BoxDecoration(
             gradient: widget.isButtonDisabled
-              ? LinearGradient(colors: [Colors.grey.shade400, Colors.grey.shade400])
+              ? LinearGradient(colors: [Colors.grey.shade500, Colors.grey.shade500])
               : LinearGradient(
                   colors: const [
                     Color(0xFFFFA726),
