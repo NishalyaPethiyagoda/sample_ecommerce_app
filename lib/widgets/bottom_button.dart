@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class AnimatedGradientButton extends StatefulWidget {
   final String buttonText;
   final VoidCallback onPressed;
-  const AnimatedGradientButton({super.key, required this.buttonText, required this.onPressed});
+  final bool isButtonDisabled;
+  const AnimatedGradientButton({super.key, required this.buttonText, required this.onPressed, this.isButtonDisabled = false});
 
   @override
   _AnimatedGradientButtonState createState() => _AnimatedGradientButtonState();
@@ -43,11 +44,13 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton> with Si
       builder: (context, child) {
         return Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: const [
-                 Color(0xFFFFA726),
-                 Color(0xFFFFD466), 
-              ],
+            gradient: widget.isButtonDisabled
+              ? LinearGradient(colors: [Colors.grey.shade400, Colors.grey.shade400])
+              : LinearGradient(
+                  colors: const [
+                    Color(0xFFFFA726),
+                    Color(0xFFFFD466), 
+                  ],
               stops: [
                 _controller.value,                      
                 _controller.value + 0.2 < 1.0 
@@ -60,7 +63,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton> with Si
             borderRadius: BorderRadius.circular(25),
           ),
           child: TextButton(
-            onPressed: widget.onPressed,
+            onPressed: widget.isButtonDisabled? null : widget.onPressed,
             child: Text(
               widget.buttonText,
               style: const TextStyle(color: Colors.white),
