@@ -12,12 +12,20 @@ class ProductDashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProductDetailScreen(
-            product: product,
-            isProductAddedToCart: Provider.of<CartProvider>(context).cartItems.contains(product)
-          )
-        ));
+        
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            transitionDuration: Duration(milliseconds: 500),
+            pageBuilder: (context, animation, secondaryAnimation) => ProductDetailScreen(
+              product: product,
+              isProductAddedToCart: Provider.of<CartProvider>(context).cartItems.contains(product)
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return FadeTransition(opacity: animation, child: child); 
+            },
+          ),
+        );
       
       },
       child: Card(
@@ -26,7 +34,10 @@ class ProductDashboardCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.network(product.imageUrl, width: 60, height: 70),
+              Hero(
+                tag: product.productId,
+                child: Image.network(product.imageUrl, width: 60, height: 70),
+              ),
               const SizedBox(width: 5,),
               Expanded(
                 child: Column(

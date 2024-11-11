@@ -77,7 +77,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     children: [
                       Center(child: Padding(
                         padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 20.0),
-                        child: Image.network(widget.product.imageUrl),
+                        child: Hero(
+                          tag: widget.product.productId,
+                          child: Image.network(widget.product.imageUrl),
+                        ),
                       )),
                       Positioned(
                         left: 5,
