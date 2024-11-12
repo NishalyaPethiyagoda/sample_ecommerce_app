@@ -164,7 +164,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               )
                             : const Center(child: Text("No Cart Items Available"),)
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 46),
                       ],
                     ),
                                         )
