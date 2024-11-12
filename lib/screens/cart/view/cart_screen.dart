@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sample_ecommerce_app/providers/cart_provider.dart';
 import 'package:sample_ecommerce_app/screens/checkout/view/checkout_screen.dart';
+import 'package:sample_ecommerce_app/util/calculation_functions.dart';
 import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
 import 'package:sample_ecommerce_app/widgets/product_cart_card.dart';
+import 'package:sample_ecommerce_app/widgets/text_gradient_container.dart';
 
 class CartScreen extends StatelessWidget {
+  const CartScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
@@ -19,13 +23,6 @@ class CartScreen extends StatelessWidget {
           "My Cart",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white.withOpacity(0.85)),
         ),
-        // actions: [
-        //   IconButton(
-        //   onPressed: (){
-        //     // expandSearch = true;
-        //   },
-        //   icon: Icon(Icons.search)
-        // ),]
       ),
       body: SafeArea(
         child: Container(
@@ -60,19 +57,30 @@ class CartScreen extends StatelessWidget {
                     },
                   ): Center(child: Text("No Items Added to Cart", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white.withOpacity(0.85)),),),
                 ),
+                
+                Positioned(
+                  bottom: 60,
+                  left: 60,
+                  right: 60,
+                  child: Center(
+                    child: TextGradientContainer(
+                      text: "Total Amount: \$ ${getTotalPrice(cartItems).toString()}",
+                    ),
+                  ),
+                ),      
                 Positioned(
                   bottom: 2,
                   left: 25,
                   right: 25,
-                    child: AnimatedGradientButton(
-                      buttonText: "Checkout",
-                      onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const CheckoutScreen()
-                        ));
-                      },
-                      isButtonDisabled: cartItems.isEmpty ? true : false
-                    ),
+                  child: AnimatedGradientButton(
+                    buttonText: "Checkout",
+                    onPressed: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const CheckoutScreen()
+                      ));
+                    },
+                    isButtonDisabled: cartItems.isEmpty ? true : false
+                  ),
                 ),
               ]
             ),

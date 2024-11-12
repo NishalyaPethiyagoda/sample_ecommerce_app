@@ -4,6 +4,7 @@ import 'package:sample_ecommerce_app/models/product_model.dart';
 import 'package:sample_ecommerce_app/providers/cart_provider.dart';
 import 'package:sample_ecommerce_app/providers/product_provider.dart';
 import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
+import 'package:sample_ecommerce_app/widgets/text_gradient_container.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final ProductModel product;
@@ -85,22 +86,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Positioned(
                         left: 5,
                         bottom: 5,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFFFFA726),
-                                Colors.grey, 
-                              ],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 2.0),
-                            child: Text("\$ ${widget.product.price.toString()}", style: TextStyle(color: Colors.white.withOpacity(0.85),fontSize: 16, fontWeight: FontWeight.w600)),
-                          ),
+                        child: TextGradientContainer(
+                          text: "\$ ${widget.product.price.toString()}",
                         ),
                       ),
                       Positioned(
