@@ -157,8 +157,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 itemCount: cartItems.length,
                                 itemBuilder: (context, index) {
                                   var item = cartItems[index];
-                                  return ProductCardCard(
-                                    product: item,
+                                  return ProductCartCard(
+                                    cartItem: item,
                                   );
                                 },
                               )

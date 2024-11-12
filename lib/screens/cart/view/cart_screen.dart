@@ -51,8 +51,8 @@ class CartScreen extends StatelessWidget {
                       return Row(
                         children: [
                           Expanded(
-                            child: ProductCardCard(
-                              product: cartItems[index],
+                            child: ProductCartCard(
+                              cartItem: cartItems[index],
                             ),
                           ),
                         ],

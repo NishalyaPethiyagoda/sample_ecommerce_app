@@ -1,10 +1,10 @@
-import 'package:sample_ecommerce_app/models/product_model.dart';
+import 'package:sample_ecommerce_app/models/cart_item_model.dart';
 
-double getTotalPrice (List<ProductModel> cartItems){
+double getTotalPrice (List<CartItemModel> cartItems){
   double totalPrice = 0.0;
 
   for(var item in cartItems){
-    totalPrice += item.price;
+    totalPrice += item.product.price * item.quantity;
   }
   return totalPrice;
 }
