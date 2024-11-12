@@ -66,7 +66,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton> with Si
             onPressed: widget.isButtonDisabled? null : widget.onPressed,
             child: Text(
               widget.buttonText,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)
             ),
           ),
         );
