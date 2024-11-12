@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sample_ecommerce_app/models/product_model.dart';
 import 'package:sample_ecommerce_app/models/user_model.dart';
 import 'package:sample_ecommerce_app/providers/cart_provider.dart';
+import 'package:sample_ecommerce_app/util/calculation_functions.dart';
 import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
 import 'package:sample_ecommerce_app/widgets/product_cart_card.dart';
 
@@ -17,15 +17,6 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends State<CheckoutScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   UserModel user = UserModel(name: '', phoneNumber: '', shippingAddress: '');
-
-  double getTotalPrice (List<ProductModel> cartItems){
-    double totalPrice = 0.0;
-
-    for(var item in cartItems){
-      totalPrice += item.price;
-    }
-    return totalPrice;
-  }
 
   @override
   Widget build(BuildContext context) {
