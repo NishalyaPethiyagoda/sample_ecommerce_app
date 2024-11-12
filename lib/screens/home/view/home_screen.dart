@@ -19,10 +19,27 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<ProductModel> products = [];
   bool isLoading = true;
+  bool expandSearch = false;
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(_onSearchChange);
+  }
+
+  void _onSearchChange(){
+    Provider.of<ProductProvider>(context, listen: false).filterProducts(searchController.text);
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final productsList = Provider.of<ProductProvider>(context).allProductsList;
 
     return BlocProvider<HomeBloc>(
       create: (BuildContext context) =>
@@ -39,22 +56,45 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor:  Color.fromARGB(255, 251, 169, 128),
+            backgroundColor:  const Color.fromARGB(255, 251, 169, 128),
             centerTitle: false,
             title: Text(
               "Products",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white.withOpacity(0.85)),
             ),
-            // actions: [
-            //   IconButton(
-            //   onPressed: (){
-            //     // expandSearch = true;
-            //   },
-            //   icon: Icon(Icons.search)
-            // ),]
+            actions: [
+              expandSearch 
+                ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0,0.0,12.0, 0.0),
+                  child: SizedBox(
+                    width: 200,
+                    child: TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          hintText: 'Search products...',
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          filled: true,
+                          fillColor: Colors.white.withOpacity(0.85),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0), // Adjust the radius as needed
+                            borderSide: BorderSide.none, // Optional: to remove border color
+                          ),
+                        ),
+                      ),
+                  ),
+                )
+                : IconButton(
+                    onPressed: (){
+                      setState(() {
+                        expandSearch = !expandSearch;
+                      });
+                    },
+                    icon: const Icon(Icons.search)
+                  ) 
+            ]
           ),
-          body: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
+          body: Consumer<ProductProvider>(
+            builder: (context, productProvider, child) {
               return SafeArea(
                 child: Container(
                   decoration: const BoxDecoration(
@@ -72,13 +112,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: isLoading
                         ? const Center(child: CircularProgressIndicator(color: Colors.grey,))
                         : ListView.builder(
-                            itemCount: (productsList.length / 2).ceil(),
+                            itemCount: (productProvider.filteredProducts.length / 2).ceil(),
                             itemBuilder: (context, index) {
                               int firstIndex = index * 2;
                               int secondIndex = firstIndex + 1;
                   
-                              ProductModel leftProduct = productsList[firstIndex];
-                              ProductModel? rightProduct = secondIndex < productsList.length ? productsList[secondIndex] : null;
+                              ProductModel leftProduct = productProvider.filteredProducts[firstIndex];
+                              ProductModel? rightProduct = secondIndex < productProvider.filteredProducts.length ? productProvider.filteredProducts[secondIndex] : null;
                               return Row(
                                 children: [
                                   Expanded(

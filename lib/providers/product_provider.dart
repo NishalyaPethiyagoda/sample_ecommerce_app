@@ -5,6 +5,22 @@ import 'package:sample_ecommerce_app/models/product_model.dart';
 
 class ProductProvider extends ChangeNotifier{
   final List<ProductModel> allProductsList = [];
+  List<ProductModel> filteredProducts = [];
+
+  ProductProvider(){
+    filteredProducts = allProductsList;
+  }
+
+  void filterProducts(String searchQuery) {
+    if (searchQuery.isEmpty) {
+      filteredProducts = allProductsList; 
+    } else {
+      filteredProducts = allProductsList
+          .where((product) => product.name.toLowerCase().contains(searchQuery.toLowerCase()))
+          .toList(); 
+    }
+    notifyListeners(); 
+  }
 
   void setProductItems(List<ProductModel> allProducts){
     allProductsList.clear();
