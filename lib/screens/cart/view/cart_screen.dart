@@ -5,7 +5,6 @@ import 'package:sample_ecommerce_app/screens/checkout/view/checkout_screen.dart'
 import 'package:sample_ecommerce_app/util/calculation_functions.dart';
 import 'package:sample_ecommerce_app/widgets/bottom_button.dart';
 import 'package:sample_ecommerce_app/widgets/product_cart_card.dart';
-import 'package:sample_ecommerce_app/widgets/text_gradient_container.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -23,6 +22,10 @@ class CartScreen extends StatelessWidget {
           "My Cart",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white.withOpacity(0.85)),
         ),
+        actions: [
+          Text("Total: \$ ${getTotalPrice(cartItems).toString()}", style: TextStyle(color: Colors.black.withOpacity(0.85),fontSize: 18, fontWeight: FontWeight.w600)),
+          const SizedBox(width: 14,)
+        ],
       ),
       body: SafeArea(
         child: Container(
@@ -56,18 +59,7 @@ class CartScreen extends StatelessWidget {
                       );
                     },
                   ): Center(child: Text("No Items Added to Cart", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white.withOpacity(0.85)),),),
-                ),
-                
-                Positioned(
-                  bottom: 60,
-                  left: 60,
-                  right: 60,
-                  child: Center(
-                    child: TextGradientContainer(
-                      text: "Total Amount: \$ ${getTotalPrice(cartItems).toString()}",
-                    ),
-                  ),
-                ),      
+                ),     
                 Positioned(
                   bottom: 2,
                   left: 25,
