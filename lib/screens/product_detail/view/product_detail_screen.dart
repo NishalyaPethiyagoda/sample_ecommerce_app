@@ -152,18 +152,32 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       isNotExpanded = !isNotExpanded;
                                     });
                                   },
-                                  child: Text(
-                                    widget.product.description, 
-                                    overflow: isNotExpanded ? TextOverflow.ellipsis : null, 
-                                    maxLines: isNotExpanded ? 4 : null,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          // border: Border.all(color: const Color.fromARGB(255, 103, 103, 103), width: 1),
+                                          color: const Color.fromARGB(255, 255, 255, 255),
+                                          borderRadius: BorderRadius.circular(2),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(6.0,6.0,6.0, 0.0),
+                                          child: Text(
+                                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: Colors.black),
+                                            widget.product.description, 
+                                            overflow: isNotExpanded ? TextOverflow.ellipsis : null, 
+                                            maxLines: isNotExpanded ? 4 : null,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4,),
+                                      isNotExpanded 
+                                        ? const Text("Tap on Description for more", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))
+                                        : Container()
+                                    ],
                                   )
                                   )),
-                                  isNotExpanded ? const Positioned(
-                                        right: 0, 
-                                        bottom: 3,
-                                        child: Text("Tap Description >", style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500))
-                                      )
-                                      : Container()
+                                  
                               ] 
                             )
                         ),
